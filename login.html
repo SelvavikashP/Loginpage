@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900" id="body">
+<div class="w-full max-w-md p-6">
+<div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+<h2 class="text-2xl font-semibold text-center text-gray-800 dark:text-gray-100 mb-4">Login</h2>
+<form method="POST" id="loginForm" novalidate>
+<input name="username" placeholder="Username" class="w-full p-3 mb-3 border rounded" />
+<input type="password" name="password" placeholder="Password" class="w-full p-3 mb-3 border rounded" />
+<button class="w-full bg-blue-600 text-white py-2 rounded">Login</button>
+</form>
+<div class="mt-4 text-center">
+<a href="signup.html" class="text-blue-600">New user? Sign up</a>
+<span class="mx-2 text-gray-400">|</span>
+<a href="forgot.html" class="text-blue-600">Forgot password?</a>
+</div>
+<p class="mt-4 text-center text-red-600" id="message">{{ message }}</p>
+<div class="mt-4 flex justify-between items-center">
+<button id="darkToggle" class="px-3 py-1 border rounded">Toggle Dark</button>
+<a href="#" id="logout" class="text-sm text-gray-500"></a>
+</div>
+</div>
+</div>
+<script>
+const msg = "{{ message }}";
+if(msg){
+  document.getElementById("message").textContent = msg;
+}
+document.getElementById("loginForm").addEventListener("submit", function(e){
+  const u = this.username.value.trim();
+  const p = this.password.value.trim();
+  if(!u || !p){
+    e.preventDefault();
+    document.getElementById("message").textContent = "Enter username and password";
+  }
+});
+const body = document.getElementById("body");
+const toggle = document.getElementById("darkToggle");
+const stored = localStorage.getItem("dark");
+if(stored === "1"){
+  body.classList.add("dark");
+}
+toggle.addEventListener("click", function(){ 
+  body.classList.toggle("dark");
+  localStorage.setItem("dark", body.classList.contains("dark") ? "1" : "0");
+});
+</script>
+</body>
+</html>
